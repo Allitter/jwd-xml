@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<banks xmlns="http://www.example.com/deposits">
+    <demand-deposit profitability="5" bank-name="BELAGROPROMBANK" monthly-fee="50" withdrawal-limit="10">
+        <depositor>Vladislav</depositor>
+        <account-id>1233214651</account-id>
+    </demand-deposit>
+
+    <time-deposit profitability="1000">
+        <depositor>Alexey</depositor>
+        <account-id>ID1233214654</account-id>
+        <time-constraints>
+            <start-date>2018-02-10</start-date>
+            <maturity-date>2023-03-11</maturity-date>
+        </time-constraints>
+    </time-deposit>
+</banks>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.example.com/deposits"
+        xmlns:tns="http://www.example.com/deposits"
+        elementFormDefault="qualified">
+
+    <element name="banks">
+        <complexType>
+            <sequence>
+                <element ref="tns:deposit"
+                         minOccurs="2"
+                         maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element abstract="true" name="deposit" type="tns:deposit"/>
+    <element name="demand-deposit" type="tns:Demand_Deposit" substitutionGroup="tns:deposit"/>
+    <element name="time-deposit" type="tns:Time_Deposit" substitutionGroup="tns:deposit"/>
+
+    <complexType name="deposit">
+        <sequence>
+            <element name="depositor" type="string"/>
+            <element name="account-id" type="tns:Account_Id"/>
+        </sequence>
+        <attribute name="profitability" type="int" use="required"/>
+        <attribute name="bank-name" type="tns:Bank_Name" default="BELARUSBANK"/>
+    </complexType>
+
+    <complexType name="Time_Deposit">
+        <complexContent>
+            <extension base="tns:deposit">
+                <sequence>
+                    <element name="time-constraints" type="tns:Time_Constraints"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="Demand_Deposit">
+        <complexContent>
+            <extension base="tns:deposit">
+                <attribute name="monthly-fee" type="int" default="0"/>
+                <attribute name="withdrawal-limit" type="int" default="0"/>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <simpleType name="Account_Id">
+        <restriction base="ID">
+            <pattern value="ID[0-9]{10}"/>
+        </restriction>
+    </simpleType>
+
+    <complexType name="Time_Constraints">
+        <sequence>
+            <element name="start-date" type="date" />
+            <element name="maturity-date" type="date" />
+        </sequence>
+    </complexType>
+
+    <simpleType name="Bank_Name">
+        <restriction base="string">
+            <enumeration value="BELARUSBANK"/>
+            <enumeration value="BELINVESTBANK"/>
+            <enumeration value="BELAGROPROMBANK"/>
+            <enumeration value="BELGAZPROMBANK"/>
+            <enumeration value="PARITETBANK"/>
+            <enumeration value="BELSWISSBANK"/>
+        </restriction>
+    </simpleType>
+</schema>
